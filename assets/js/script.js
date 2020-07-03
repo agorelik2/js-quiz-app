@@ -7,6 +7,10 @@ const nextButton = document.getElementById('next-btn')
 let jsQuestions, currentQuestionIndex
 
 startButton.addEventListener('click', startQuiz)
+nextButton.addEventListener('click', () => {
+    currentQuestionIndex++
+    displayNextQuestion()
+  })
 
 function startQuiz() {
     startButton.classList.add('hide')
@@ -17,14 +21,32 @@ function startQuiz() {
   }
 
 function displayNextQuestion() {
-    
+    resetPage()
     showQuestion(jsQuestions[currentQuestionIndex])
   }
 
+function resetPage(){
+
+    nextButton.classList.add('hide')
+    while (answerButtonsElement.firstChild) {
+        answerButtonsElement.removeChild(answerButtonsElement.firstChild)
+    }
+}
 function showQuestion(question){
 
     questionElement.innerText = question.question
+    question.answers.forEach(answer => {
+        const button = document.createElement('button')
+        button.innerText = answer.text
+        button.classList.add('btn')
+        if (answer.correct) {
+          button.dataset.correct = answer.correct
+        }
+        button.addEventListener('click', selectAnswer)
+        answerButtonsElement.appendChild(button)
+      })
 }
+
   function selectAnswer(e) {
 
 
