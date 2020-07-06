@@ -11,11 +11,14 @@
 <body>
     <div  id="quiz-container" class="quiz-container">
         <div  id="quiz-status" class="quiz-status">Status</div>
-        <div id="user-input" class = "user-input hide">
+        <div id="user-input" class ="user-input hide">
             <form>
                 <label for="user-init">Enter Initials:</label>
                 <input type="text" id="user-init" name="user-init">
-                <input type="submit" value="Submit">
+                <button id="submit-btn" class ="submit-btn btn">Submit</button>
+                <div>
+                  <h4 id="response"></h4>
+                </div>
             </form>
         </div>
         <div id="question-container" class="hide">

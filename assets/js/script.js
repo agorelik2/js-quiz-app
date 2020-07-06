@@ -5,7 +5,10 @@ const answerButtonsElement = document.getElementById('answer-buttons')
 const startButton = document.getElementById('start-btn')
 const nextButton = document.getElementById('next-btn')
 const quizStatus = document.getElementById('quiz-status')
-const userInit = document.getElementById ('user-input')
+const userInput = document.getElementById ('user-input')
+const userInit = document.getElementById ('user-init')
+const userResponse = document.getElementById ('response')
+var submitButton = document.getElementById('submit-btn');
 
 const questions = [
     {
@@ -50,15 +53,12 @@ let jsQuestions, currentQuestionIndex, score
 
 quizStatus.innerText = "Coding Quiz Challenge"
 quizStatus.classList.remove('hide')
-userInit.classList.add('hide')
+userInput.classList.add('hide')
 startButton.addEventListener('click', startQuiz)
 console.log ("number of questions: " + questions.length)
 nextButton.addEventListener('click', () => 
 {
-    console.log ("before question index: " + currentQuestionIndex)
     currentQuestionIndex++
-    console.log ("curent question index: " + currentQuestionIndex)
-    console.log ("number of questions: " + questions.length)
     if (questions.length >= currentQuestionIndex + 1){
         displayNextQuestion()
     } else {
@@ -66,11 +66,11 @@ nextButton.addEventListener('click', () =>
        displayResults()
     }
   })
-
+  
 function startQuiz() {
     startButton.classList.add('hide')
     quizStatus.classList.add('hide')
-    userInit.classList.add('hide')
+    userInput.classList.add('hide')
     jsQuestions = questions.sort(() => Math.random() - .5)
     currentQuestionIndex = 0
     score = 0
@@ -160,8 +160,19 @@ function showQuestion(question){
     quizStatus.innerText = "All Done! Your score is " + score
     startButton.innerText = 'Try again'
     nextButton.innerText = 'Next'
-    userInit.classList.remove('hide')
+    userInput.classList.remove('hide')
     startButton.classList.remove('hide')
     quizStatus.classList.remove('hide')
     currentQuestionIndex = 0
+    userResponse.textContent = ""
+    userInit.value = ""
+    submitButton.addEventListener('click', function(event) {
+      console.log ("submit button clicked")
+      event.preventDefault();
+      event.stopPropagation();
+      var response = "Thank you for your submission " + userInit.value 
+      console.log ("user initials: " + userInit.value)
+      userResponse.textContent = response;
+  
+    })
 }
