@@ -19,9 +19,9 @@
     justify-content: center;
     align-items: center;  
   }
-  .container {  
+  .quiz-container {  
     background-color: white;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 10px;
     box-shadow: 0 0 10px 2px;
     width: 800px;
@@ -29,18 +29,57 @@
     margin: 20px 0;
     padding: 20px 20px;
   }
+  .quiz-status {
+    --hue: var(--hue-base);
+    color: hsl(var(--hue), 100%, 50%);
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    min-height: 100px;
+    background-color: white; 
+    outline: none;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .user-input {
+    --hue: var(--hue-base);
+    color: hsl(var(--hue), 100%, 50%);
+    border: 1px solid
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 10px 10px;
+    min-height: 50px;
+    background-color: white; 
+    outline: none;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #question-container {
+    min-height: 50px;
+    border-radius: 8px;
+    color: teal ;
+    font-size: 30px;
+    padding: 15px;
+  }
   .btn-grid {
     display: grid;
     gap: 10px;
     margin: 20px 0;
+    
   }
   .btn {
     --hue: var(--hue-base); 
+    font-size: 25px;
     background-color: hsl(var(--hue), 100%, 50%);
     border: 1px solid hsl(var(--hue), 100%, 30%);
     color: white;
     outline: none;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 5px 10px;  
   }
   
