@@ -26,6 +26,8 @@
     box-shadow: 0 0 10px 2px;
     width: 800px;
     max-width: 80%;
+    height: 500px;
+    max-width: 80%;
     margin: 20px 0;
     padding: 20px 20px;
   }
@@ -47,11 +49,13 @@
   .user-input {
     --hue: var(--hue-base);
     color: hsl(var(--hue), 100%, 50%);
-    border: 1px solid
+    border: 1px solid;
     font-size: 1.5rem;
     font-weight: bold;
     padding: 10px 10px;
-    min-height: 50px;
+    margin: 40px;
+    height: 200px;
+    min-height: 200px;
     background-color: white; 
     outline: none;
     font-size: 20px;

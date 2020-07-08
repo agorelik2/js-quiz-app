@@ -175,6 +175,7 @@ function showQuestion(question){
  
    if (clicked == 1 && correct == 'true') {
         element.classList.add('correct')
+        console.log ("timer before correct: " + secondsLeft)
         console.log ("score before correct: " + score)
         score = secondsLeft
         console.log ("correct button pressed, score: " + score)
@@ -182,9 +183,11 @@ function showQuestion(question){
     } else if (clicked == 1 && correct == 'false'){
             element.classList.add('wrong')
             console.log ("clicked wrong button")
+            console.log ("timer before wrong: " + secondsLeft) 
             console.log ("score before wrong was pressed: " + score)
-            score = secondsLeft - 10
-            console.log ("incorrect button pressed timer: " + secondsLeft)
+            score = score - 10
+            secondsLeft = secondsLeft - 10
+            console.log ("incorrect button pressed, timer decr: " + secondsLeft)
             console.log ("incorrect button pressed score: " + score)
     } else { console.log ("did not click this button")}
   }
