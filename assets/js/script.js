@@ -9,6 +9,10 @@ const userInput = document.getElementById ('user-input')
 const userInit = document.getElementById ('user-init')
 const userResponse = document.getElementById ('response')
 var submitButton = document.getElementById('submit-btn');
+var myTimer = document.getElementById('timer');
+const timeTotal  = 60
+var secondsLeft 
+var onTime
 
 const questions = [
     {
@@ -59,11 +63,18 @@ console.log ("number of questions: " + questions.length)
 nextButton.addEventListener('click', () => 
 {
     currentQuestionIndex++
-    if (questions.length >= currentQuestionIndex + 1){
-        displayNextQuestion()
-    } else {
-       console.log ("you are done") 
-       displayResults()
+    if (secondsLeft > 1){
+      onTime = 1
+      if (questions.length >= currentQuestionIndex + 1){
+          displayNextQuestion()
+      } else {
+        console.log ("you are done") 
+        displayResults(onTime)
+      }
+    }
+    else {
+      onTime = 0
+      displayResults(onTime)
     }
   })
   
@@ -74,14 +85,37 @@ function startQuiz() {
     jsQuestions = questions.sort(() => Math.random() - .5)
     currentQuestionIndex = 0
     score = 0
+    secondsLeft = timeTotal
+    myTimer.classList.remove('hide')
     questionContainerElement.classList.remove('hide')
     displayNextQuestion()
   }
 
 function displayNextQuestion() {
     resetPage()
-    showQuestion(jsQuestions[currentQuestionIndex])
+    if (secondsLeft > 0) {
+      showTimer()
+      showQuestion(jsQuestions[currentQuestionIndex])
+    }  else {
+        onTime = 0
+        displayResults(onTime)
+    }
   }
+
+function showTimer()  {
+    var interval = setInterval(function() {
+      myTimer.innerHTML = secondsLeft + " seconds left";
+
+      if(secondsLeft < 1) {
+        myTimer.innerHTML = "0 seconds left"
+        clearInterval(interval);
+      } else {
+          secondsLeft--;
+      }
+    } ,1000) ; 
+  }
+
+  
 
 function resetPage(){
 
@@ -141,10 +175,17 @@ function showQuestion(question){
  
    if (clicked == 1 && correct == 'true') {
         element.classList.add('correct')
-        score = score + 2
+        console.log ("score before correct: " + score)
+        score = secondsLeft
+        console.log ("correct button pressed, score: " + score)
+        console.log ("correct button pressed, timer: " + secondsLeft)
     } else if (clicked == 1 && correct == 'false'){
             element.classList.add('wrong')
             console.log ("clicked wrong button")
+            console.log ("score before wrong was pressed: " + score)
+            score = secondsLeft - 10
+            console.log ("incorrect button pressed timer: " + secondsLeft)
+            console.log ("incorrect button pressed score: " + score)
     } else { console.log ("did not click this button")}
   }
 
@@ -154,25 +195,36 @@ function showQuestion(question){
     element.classList.remove('wrong')
   }
 
-  function displayResults() {
+  function displayResults(onTime) {   
     questionContainerElement.classList.add('hide')
+    myTimer.classList.add('hide')
     nextButton.classList.add('hide')
-    quizStatus.innerText = "All Done! Your score is " + score
-    startButton.innerText = 'Try again'
-    nextButton.innerText = 'Next'
-    userInput.classList.remove('hide')
     startButton.classList.remove('hide')
     quizStatus.classList.remove('hide')
     currentQuestionIndex = 0
     userResponse.textContent = ""
     userInit.value = ""
-    submitButton.addEventListener('click', function(event) {
-      console.log ("submit button clicked")
-      event.preventDefault();
-      event.stopPropagation();
-      var response = "Thank you for your submission " + userInit.value 
-      console.log ("user initials: " + userInit.value)
-      userResponse.textContent = response;
-  
-    })
+    
+    if (onTime) {
+      if (score > 0) {
+        quizStatus.innerText = "All Done! Your score is " + score
+        userInput.classList.remove('hide')
+        submitButton.addEventListener('click', function(event) {
+        console.log ("submit button clicked")
+        event.preventDefault();
+        event.stopPropagation();
+        var response = "Thank you for your submission " + userInit.value 
+        console.log ("user initials: " + userInit.value)
+        userResponse.textContent = response    
+        })
+      } else {
+            score = 0 
+            quizStatus.innerText = "Oooops... Your score is " + score
+          }       
+    } else {
+          quizStatus.innerText = "Sorry... You ran out of time!" 
+      } 
+      
+    startButton.innerText = 'Try again'
+    nextButton.innerText = 'Next'   
 }
