@@ -9,12 +9,12 @@
     <title>Coding Quiz Challenge</title>
 </head>
 <body>
-    <div  id="quiz-container" class="quiz-container">
-      <div id="timer" class ="timer hide">Total time:</div>
+    <div id="quiz-container" class="quiz-container"><span class="quiz-name" id ="quiz-name">Coding Quiz</span>
+      <div id="timer" class ="timer hide"></div>
         <div  id="quiz-status" class="quiz-status">Status</div>
         <div id="user-input" class ="user-input hide">
             <form>
-                <label for="user-init">Enter Initials:</label>
+                <label for="user-init">Enter Name:</label>
                 <input type="text" id="user-init" name="user-init">
                 <button id="submit-btn" class ="submit-btn btn">Submit</button>
                 <div>
@@ -22,7 +22,7 @@
                 </div>
             </form>
         </div>
-        <div id="question-container" class="hide">
+        <div id="question-container" class="question-container hide">
           <div id="question">Question</div>
           <div id="answer-buttons" class="btn-grid">
             <button class="btn">Answer 1</button>

@@ -26,7 +26,7 @@
     box-shadow: 0 0 10px 2px;
     width: 800px;
     max-width: 80%;
-    height: 500px;
+    height: 600px;
     max-width: 80%;
     margin: 20px 0;
     padding: 20px 20px;
@@ -34,26 +34,27 @@
   .quiz-status {
     --hue: var(--hue-base);
     color: hsl(var(--hue), 100%, 50%);
-    font-size: 1.5rem;
+    font-size: 50px;
     font-weight: bold;
     padding: 10px 20px;
+    margin: 20px 20px;
     min-height: 100px;
     background-color: white; 
     outline: none;
-    font-size: 30px;
+    font-size: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   .user-input {
-    --hue: var(--hue-base);
+    --hue: var(--hue-base); 
     color: hsl(var(--hue), 100%, 50%);
-    border: 1px solid;
+    /* border: 1px solid; */
     font-size: 1.5rem;
     font-weight: bold;
     padding: 10px 10px;
-    margin: 40px;
+    margin: 10px;
     height: 200px;
     min-height: 200px;
     background-color: white; 
@@ -63,19 +64,65 @@
     justify-content: center;
     align-items: center;
   }
-  #question-container {
-    min-height: 50px;
-    border-radius: 8px;
-    color: teal ;
-    font-size: 30px;
-    padding: 15px;
+
+  #user-init {
+    --hue: var(--hue-correct);
+    color: hsl(var(--hue), 100%, 30%);
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 10px 10px;
   }
+
+  .quiz-name {
+    --hue: var(--hue-base);
+    color: hsl(var(--hue), 100%, 20%);
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 15px 15px;
+    margin: 15px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .question-container {
+    --hue: var(--hue-base);
+    color: hsl(var(--hue), 50%, 25%);
+    min-height: 50px;
+    padding: 15px 15px;
+    margin: 15px 15px;
+    border-radius: 8px;  
+    font-size: 25px;
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #response {
+    --hue: var(--hue-wrong);
+    color: hsl(var(--hue), 50%, 50%);
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .timer {
+    --hue: var(--hue-wrong);
+    color: hsl(var(--hue), 50%, 50%);
+    font-size: 15px;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+  }
+
   .btn-grid {
     display: grid;
     gap: 10px;
     margin: 20px 0;
     
   }
+
   .btn {
     --hue: var(--hue-base); 
     font-size: 25px;

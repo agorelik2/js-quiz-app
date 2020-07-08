@@ -5,6 +5,7 @@ const answerButtonsElement = document.getElementById('answer-buttons')
 const startButton = document.getElementById('start-btn')
 const nextButton = document.getElementById('next-btn')
 const quizStatus = document.getElementById('quiz-status')
+const quizName = document.getElementById('quiz-name')
 const userInput = document.getElementById ('user-input')
 const userInit = document.getElementById ('user-init')
 const userResponse = document.getElementById ('response')
@@ -13,6 +14,8 @@ var myTimer = document.getElementById('timer');
 const timeTotal  = 60
 var secondsLeft 
 var onTime
+
+const quizInstructions = 'Try to answer following code-related questions within the time limit. You will get 15 points for every correct answer plus bonus points for answering quickly. When you hit the wrong answer, it will penalize you by 10 seconds.'
 
 const questions = [
     {
@@ -55,8 +58,10 @@ const questions = [
 
 let jsQuestions, currentQuestionIndex, score
 
-quizStatus.innerText = "Coding Quiz Challenge"
+quizStatus.innerHTML = quizInstructions 
+quizName.classList.remove('hide')
 quizStatus.classList.remove('hide')
+
 userInput.classList.add('hide')
 startButton.addEventListener('click', startQuiz)
 console.log ("number of questions: " + questions.length)
@@ -104,7 +109,7 @@ function displayNextQuestion() {
 
 function showTimer()  {
     var interval = setInterval(function() {
-      myTimer.innerHTML = secondsLeft + " seconds left";
+      myTimer.innerHTML = "Timer: " + secondsLeft + " seconds left";
 
       if(secondsLeft < 1) {
         myTimer.innerHTML = "0 seconds left"
@@ -177,7 +182,7 @@ function showQuestion(question){
         element.classList.add('correct')
         console.log ("timer before correct: " + secondsLeft)
         console.log ("score before correct: " + score)
-        score = secondsLeft
+        score = score + 15
         console.log ("correct button pressed, score: " + score)
         console.log ("correct button pressed, timer: " + secondsLeft)
     } else if (clicked == 1 && correct == 'false'){
@@ -185,7 +190,6 @@ function showQuestion(question){
             console.log ("clicked wrong button")
             console.log ("timer before wrong: " + secondsLeft) 
             console.log ("score before wrong was pressed: " + score)
-            score = score - 10
             secondsLeft = secondsLeft - 10
             console.log ("incorrect button pressed, timer decr: " + secondsLeft)
             console.log ("incorrect button pressed score: " + score)
@@ -204,19 +208,23 @@ function showQuestion(question){
     nextButton.classList.add('hide')
     startButton.classList.remove('hide')
     quizStatus.classList.remove('hide')
+    quizName.classList.add('hide')
     currentQuestionIndex = 0
     userResponse.textContent = ""
     userInit.value = ""
     
     if (onTime) {
       if (score > 0) {
-        quizStatus.innerText = "All Done! Your score is " + score
+        if (secondsLeft > 0){
+          score = score + secondsLeft
+        }
+        quizStatus.innerHTML = "All Done! Your score is " + score
         userInput.classList.remove('hide')
         submitButton.addEventListener('click', function(event) {
         console.log ("submit button clicked")
         event.preventDefault();
         event.stopPropagation();
-        var response = "Thank you for your submission " + userInit.value 
+        var response = userInit.value  + ", thank you for your submission! "
         console.log ("user initials: " + userInit.value)
         userResponse.textContent = response    
         })
