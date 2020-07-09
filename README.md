@@ -1,4 +1,4 @@
-# js-quiz-app
+# JavaScript Quiz Application
 
 ## Fuctionality
 
@@ -21,18 +21,16 @@ If user runs out of time, then user is presented with the screen :
 
 When user answers a question incorrectly,then 10 seconds is subtracted from the clock.
 When user answers a question correctly, then 15 points is added to his score. 
-When user answers all the questions on time, he will get BONUS POINTS added, and the number of the bonus points is equal to the number of seconds left on the timer when he is done with the test.
+When user answers all the questions on time, he will get BONUS POINTS added, and the number of the bonus points is equal to the number of seconds left on the timer when he is done with the test. If two users answered the same number of questions correctly, they may end up with different scores because one finished the quiz faster than another.
 
 When all questions are answered or the timer reaches 0, THEN the game is over
 When the game is over, THEN user is able save his initials and score IF THERE IS A POSITIVE RESULT and he finished within the time.
 ```
 
-
-
-### Review
-
-You are required to submit the following for review:
+### URLs for GitHub access
 
 * The URL of the functional, deployed application.
+    https://agorelik2.github.io/js-quiz-app/
 
 * The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
+    https://github.com/agorelik2/js-quiz-app

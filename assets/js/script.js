@@ -14,7 +14,7 @@ const userResponse = document.getElementById ('response')
 const userHighScore = document.getElementById ('high-score')
 var submitButton = document.getElementById('submit-btn');
 var myTimer = document.getElementById('timer');
-const timeTotal  = 60
+const timeTotal  = 75
 var secondsLeft 
 var onTime
 
@@ -57,6 +57,15 @@ const questions = [
         { text: 'if i == 3 then', correct: false },
         { text: 'if i = 3', correct: false }
       ]
+    },
+    {
+      question: 'What is the correct way to write a JavaScript array?',
+      answers: [
+        { text: 'var colors = ["red","green","blue"]', correct: true },
+        { text: 'var colors = "red","green","blue"', correct: false },
+        { text: 'var colors = ("red","green","blue")', correct: false },
+        { text: 'var colors = {"red","green","blue")', correct: false }
+      ]
     }
   ]
 
@@ -78,7 +87,6 @@ nextButton.addEventListener('click', () =>
       if (questions.length >= currentQuestionIndex + 1){
           displayNextQuestion()
       } else {
-        console.log ("you are done") 
         displayResults(onTime)
       }
     }
@@ -163,7 +171,7 @@ function showQuestion(question){
     //Create an array of all answers and set the data element correct to 'correct' or 'wrong'
     
     Array.from(answerButtonsElement.children).forEach(button => {
-        console.log ("inside buttons array")
+        
         if (button == selectedButton) {          
             console.log ("button selected")
             selected = 1  
@@ -232,64 +240,71 @@ function showQuestion(question){
         if (secondsLeft > 0){
           score = score + secondsLeft
         }
-        quizStatus.innerHTML = "All Done! Your score is " + score
-        userInput.classList.remove('hide')
+        quizStatus.innerHTML = "All Done! Your score is " + score;
+        userInput.classList.remove('hide');
         submitButton.addEventListener('click', function(event) {
         console.log ("submit button clicked")
         event.preventDefault();
         event.stopPropagation();
         var response = userInit.value  + ", thank you for your submission! "
-        console.log ("user initials: " + userInit.value)
+        
         userResponse.textContent = response  
         
         // localStorage.setItem ("highscore", score);
         //localStorage.removeItem ("highscore");
         //localStorage.removeItem ("highscoreuser");
 
-        storeHighScores(score, userInit.value);
-
+        //Store the highest score if achieved. Display the highest score
+        var setScore = 0
+        storeHighScores(score, userInit.value, setScore);
         displayHighScores();
         })
       } else {
         // user did not answer any question correctly
             score = 0 
-            quizStatus.innerText = "Oooops... Your score is " + score
+            quizStatus.innerText = "Oooops... Your score is " + score;
           }        
     } else {
         // user ran out of time
-          quizStatus.innerText = "Sorry... You ran out of time!" 
+          quizStatus.innerText = "Sorry... You ran out of time!";
       } 
       
-    startButton.innerText = 'Try again'
-    nextButton.innerText = 'Next'   
+    startButton.innerText = 'Try again';
+    nextButton.innerText = 'Next';   
 }
 
 // Store user initials and high score result
 function storeHighScores(newScore, newUser) {
 
 var highscore = localStorage.getItem("highscore");
-
+console.log ("the high score stored: ") + highscore
   // Compare the new score with the high score stored in the local storage
   if(highscore !== null) { 
 
   //Override the HIGH SCORE
     if(newScore > highscore) {
-        localStorage.setItem("highscoreuser", newUser)
-        localStorage.setItem("highscore", newScore);     
+      console.log ("new high score: ")
+        localStorage.setItem("highscoreuser", newUser);
+        localStorage.setItem("highscore", newScore);      
     } 
   //There is no high score, so set the FIRST high score
   }else{
-    localStorage.setItem("highscoreuser", newUser)
-    localStorage.setItem("highscore", newScore);  
+    localStorage.setItem("highscoreuser", newUser);
+    localStorage.setItem("highscore", newScore); 
   }
-
 }
 
-// Display High Scores
-function displayHighScores(newScore, newUser) {
+// Display High Scores and message
+function displayHighScores() {
 
-  console.log ("you are in disp high scores")
+  console.log ("disp high score")
   var highscore = localStorage.getItem("highscore");
   var highUser = localStorage.getItem("highscoreuser");
-  userHighScore.innerHTML += "<br/>High Score: " + highscore + " was set by " + highUser + ". Try Again !!!"
+  userHighScore.innerHTML = "<br/>The highest score of " + highscore + " was set by " + highUser + ". Try Again !!!"
+  
+  //if (setnew === 1) {
+  //  userHighScore.innerHTML = "<br/>Congratulations "+ highscoreuser + "!!! You just set the highest score of "+ highscore 
+  //}else{
+  //userHighScore.innerHTML = "<br/>The highest score of " + highscore + " was set by " + highUser + ". Try Again !!!"
+  //}
 }
