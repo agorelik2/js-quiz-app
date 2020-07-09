@@ -231,7 +231,7 @@ function showQuestion(question){
     quizName.classList.add('hide')
     currentQuestionIndex = 0
     userResponse.textContent = ""
-    userHighScore.textContent = ""
+    userHighScore.innerHTML = ""
     userInit.value = ""
     
     //Check if user was on time
@@ -281,9 +281,9 @@ console.log ("the high score stored: ") + highscore
   // Compare the new score with the high score stored in the local storage
   if(highscore !== null) { 
 
-  //Override the HIGH SCORE
+  //Override the HIGH SCORE stored in local storage
     if(newScore > highscore) {
-      console.log ("new high score: ")
+        console.log ("new high score: " + newScore)
         localStorage.setItem("highscoreuser", newUser);
         localStorage.setItem("highscore", newScore);      
     } 
@@ -297,7 +297,7 @@ console.log ("the high score stored: ") + highscore
 // Display High Scores and message
 function displayHighScores() {
 
-  console.log ("disp high score")
+  console.log ("disp high score: " + highscore)
   var highscore = localStorage.getItem("highscore");
   var highUser = localStorage.getItem("highscoreuser");
   userHighScore.innerHTML = "<br/>The highest score of " + highscore + " was set by " + highUser + ". Try Again !!!"
