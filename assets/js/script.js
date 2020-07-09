@@ -1,3 +1,5 @@
+// Set constants and variables
+
 const quizContainerElement = document.getElementById('quiz-container')
 const questionContainerElement = document.getElementById('question-container')
 const questionElement = document.getElementById('question')
@@ -9,6 +11,7 @@ const quizName = document.getElementById('quiz-name')
 const userInput = document.getElementById ('user-input')
 const userInit = document.getElementById ('user-init')
 const userResponse = document.getElementById ('response')
+const userHighScore = document.getElementById ('high-score')
 var submitButton = document.getElementById('submit-btn');
 var myTimer = document.getElementById('timer');
 const timeTotal  = 60
@@ -17,6 +20,7 @@ var onTime
 
 const quizInstructions = 'Try to answer following code-related questions within the time limit. You will get 15 points for every correct answer plus bonus points for answering quickly. When you hit the wrong answer, it will penalize you by 10 seconds.'
 
+// Define the array of questions
 const questions = [
     {
       question: 'Inside which HTML element do we put the JavaScript?',
@@ -56,6 +60,7 @@ const questions = [
     }
   ]
 
+//Main routine
 let jsQuestions, currentQuestionIndex, score
 
 quizStatus.innerHTML = quizInstructions 
@@ -64,7 +69,7 @@ quizStatus.classList.remove('hide')
 
 userInput.classList.add('hide')
 startButton.addEventListener('click', startQuiz)
-console.log ("number of questions: " + questions.length)
+
 nextButton.addEventListener('click', () => 
 {
     currentQuestionIndex++
@@ -83,6 +88,7 @@ nextButton.addEventListener('click', () =>
     }
   })
   
+// Start Quiz
 function startQuiz() {
     startButton.classList.add('hide')
     quizStatus.classList.add('hide')
@@ -96,6 +102,7 @@ function startQuiz() {
     displayNextQuestion()
   }
 
+//Display next Question
 function displayNextQuestion() {
     resetPage()
     if (secondsLeft > 0) {
@@ -107,6 +114,7 @@ function displayNextQuestion() {
     }
   }
 
+  // Set Timer
 function showTimer()  {
     var interval = setInterval(function() {
       myTimer.innerHTML = "Timer: " + secondsLeft + " seconds left";
@@ -121,7 +129,7 @@ function showTimer()  {
   }
 
   
-
+// Reset Page
 function resetPage(){
 
     nextButton.classList.add('hide')
@@ -129,6 +137,8 @@ function resetPage(){
         answerButtonsElement.removeChild(answerButtonsElement.firstChild)
     }
 }
+
+//Present a question and multiple choice answers
 function showQuestion(question){
 
     questionElement.innerText = question.question
@@ -144,13 +154,14 @@ function showQuestion(question){
       })
 }
 
+// Functionality to select answer
   function selectAnswer(e) {
     const selectedButton = e.target
     let correct = selectedButton.dataset.correct
     let selected = 0
     
     //Create an array of all answers and set the data element correct to 'correct' or 'wrong'
-    //setStatusClass(document.body, correct)
+    
     Array.from(answerButtonsElement.children).forEach(button => {
         console.log ("inside buttons array")
         if (button == selectedButton) {          
@@ -163,14 +174,14 @@ function showQuestion(question){
         button.disabled = true
   })
   
+    //If this is not the last question
     if (jsQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove('hide')   
     } 
+    // this is the last question
     else {
        nextButton.classList.remove('hide')
-       nextButton.innerText = 'Finish'
-    //   nextButton.addEventListener('click', displayResults)
-      console.log ("after display results")     
+       nextButton.innerText = 'Finish'    
     }
 }
  
@@ -202,6 +213,7 @@ function showQuestion(question){
     element.classList.remove('wrong')
   }
 
+  // Present Results Screen
   function displayResults(onTime) {   
     questionContainerElement.classList.add('hide')
     myTimer.classList.add('hide')
@@ -211,8 +223,10 @@ function showQuestion(question){
     quizName.classList.add('hide')
     currentQuestionIndex = 0
     userResponse.textContent = ""
+    userHighScore.textContent = ""
     userInit.value = ""
     
+    //Check if user was on time
     if (onTime) {
       if (score > 0) {
         if (secondsLeft > 0){
@@ -226,16 +240,56 @@ function showQuestion(question){
         event.stopPropagation();
         var response = userInit.value  + ", thank you for your submission! "
         console.log ("user initials: " + userInit.value)
-        userResponse.textContent = response    
+        userResponse.textContent = response  
+        
+        // localStorage.setItem ("highscore", score);
+        //localStorage.removeItem ("highscore");
+        //localStorage.removeItem ("highscoreuser");
+
+        storeHighScores(score, userInit.value);
+
+        displayHighScores();
         })
       } else {
+        // user did not answer any question correctly
             score = 0 
             quizStatus.innerText = "Oooops... Your score is " + score
-          }       
+          }        
     } else {
+        // user ran out of time
           quizStatus.innerText = "Sorry... You ran out of time!" 
       } 
       
     startButton.innerText = 'Try again'
     nextButton.innerText = 'Next'   
+}
+
+// Store user initials and high score result
+function storeHighScores(newScore, newUser) {
+
+var highscore = localStorage.getItem("highscore");
+
+  // Compare the new score with the high score stored in the local storage
+  if(highscore !== null) { 
+
+  //Override the HIGH SCORE
+    if(newScore > highscore) {
+        localStorage.setItem("highscoreuser", newUser)
+        localStorage.setItem("highscore", newScore);     
+    } 
+  //There is no high score, so set the FIRST high score
+  }else{
+    localStorage.setItem("highscoreuser", newUser)
+    localStorage.setItem("highscore", newScore);  
+  }
+
+}
+
+// Display High Scores
+function displayHighScores(newScore, newUser) {
+
+  console.log ("you are in disp high scores")
+  var highscore = localStorage.getItem("highscore");
+  var highUser = localStorage.getItem("highscoreuser");
+  userHighScore.innerHTML += "<br/>High Score: " + highscore + " was set by " + highUser + ". Try Again !!!"
 }
